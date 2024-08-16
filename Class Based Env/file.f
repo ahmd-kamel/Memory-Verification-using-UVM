@@ -1,0 +1,11 @@
+if.sv
+transaction.sv
+package.sv
+sequencer.sv
+driver.sv
+monitor.sv
+scoreboard.sv
+subscriber.sv
+env.sv
+../DUT/memory.sv
+top.sv
