@@ -16,6 +16,15 @@ This diagram represents the Single Port Memory module. It shows the inputs and o
 - **data_out [32]**: 32-bit output data bus.
 - **valid_out**: output valid signal indicating data availability.
 
+## Test Cases to ensure Functional Coverage
+![Class Environment](./matrix.png)
+### Test Cases Overview
+- **TC #01**: Reset and read all locations after reset all should be zeros.
+- **TC #02**: Write to all locations with 0xfaf5 and read from all to ensure they contain 0xfaf5.
+- **TC #03**: Write to boundary address 0 and ensure correct reading.
+- **TC #04**: Write to boundary address 15 and ensure correct reading.
+- **TC #05**: Reset, write value 0x5fff to address 5, and read it from the same address to ensure correctness.
+- **TC #06**: Write to an out-of-bound memory address like -1 or 16; no write should occur.
 
 ## Class based Env Diagram
 ![Class Environment](./env_diagram.jpg)
@@ -44,5 +53,62 @@ This diagram illustrates the architecture of the test bench environment. It incl
 
 6. **Validation**: The Scoreboard checks if the actual output matches the expected output, determining if the DUT passes the test.
 
-## Class based Env Diagram
-to be completed
+## UVM Environment Diagram
+![Environment Diagram](./uvm_tb_typical.jpg)
+The UVM environment for verifying the memory block includes the following components:
+
+- **Top**: Sets up the environment and runs the tests.
+- **Test**: Contains the test scenarios.
+- **Env**: The environment class that instantiates and connects all UVM components.
+- **Agent**: The agent that encapsulates the driver, monitor, and sequencer.
+- **Sequencer**: Provides a sequence of transactions to the driver.
+- **Driver**: Sends input stimuli to the DUT (Device Under Test).
+- **Monitor**: Observes the inputs and outputs of the DUT.
+- **Scoreboard**: Compares the DUT output with the expected result.
+- **Subscriber**: Collect coverage data.
+- **Sequence item**: The sequence-item consist of data fields required for generating the stimulus.
+- **Sequence**: The sequence generates a series of sequence_item’s and sends it to the driver via sequencer.
+
+## File Structure
+    .
+    ├── Class Based Env
+    │   ├── coverage.sv
+    │   ├── driver.sv
+    │   ├── env.sv
+    │   ├── file.f
+    │   ├── if.sv
+    │   ├── monitor.sv
+    │   ├── package.sv
+    │   ├── run.do
+    │   ├── scoreboard.sv
+    │   ├── sequencer.sv
+    │   ├── subscriber.sv
+    │   ├── temp.tcl
+    │   ├── top.sv
+    │   └── transaction.sv
+    │
+    ├── DUT
+    │   └── memory.sv
+    │
+    ├── UVM Based Env
+    │   ├── my_agent.svh
+    │   ├── my_driver.svh
+    │   ├── my_env.svh
+    │   ├── my_if.svh
+    │   ├── my_monitor.svh
+    │   ├── my_packge.sv
+    │   ├── my_scoreboard.svh
+    │   ├── my_sequencer.svh
+    │   ├── my_sequence.svh
+    │   ├── my_subscriber.svh
+    │   ├── my_test.svh
+    │   ├── sequence_item.svh
+    │   └── top.sv
+    │
+    ├── LICENSE
+    └── README.md
+
+## References
+- SystemVerilog - IEEE 1800 Standard
+- UVM - Cookbook by Siemens Verification Academy
+- UVM - Universal Verification Methodology by Siemens Verification Academy
