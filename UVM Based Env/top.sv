@@ -5,7 +5,7 @@ module top;
 import uvm_pkg::*;
 import my_pkg::*;
 
-  bit clk, reset_n;
+  bit clk;
   always #5 clk = ~clk; // resetting and clocking mechanism ?
   
   intf in1(clk);
